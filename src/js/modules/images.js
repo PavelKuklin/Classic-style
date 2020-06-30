@@ -1,7 +1,10 @@
+import calcScroll from './calcscroll';
+
 const images = () => {
     const imgPopup = document.createElement('div'),
         workSection = document.querySelector('.works'),
-        bigImage = document.createElement('img');
+        bigImage = document.createElement('img'),
+        scroll = calcScroll();
 
     imgPopup.classList.add('popup');
     workSection.appendChild(imgPopup);
@@ -16,7 +19,7 @@ const images = () => {
     bigImage.style.cssText = `
         max-width: 80%;
         max-height: 80%;    
-        `;
+    `;
 
     imgPopup.appendChild(bigImage);
 
@@ -27,14 +30,20 @@ const images = () => {
 
         if(target && target.classList.contains('preview')) {
             imgPopup.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
+            document.body.style.cssText = `
+                overflow: hidden;
+                margin-right: ${scroll}px;
+                `;
             const path = target.parentNode.getAttribute('href');
             bigImage.setAttribute('src', path);
         }
 
         if(target && target.matches('div.popup')) {
             imgPopup.style.display = 'none';
-            document.body.style.overflow = '';
+            document.body.style.cssText = `
+                overflow: '';
+                margin-right: 0;
+            `;
         }
     })
 };
